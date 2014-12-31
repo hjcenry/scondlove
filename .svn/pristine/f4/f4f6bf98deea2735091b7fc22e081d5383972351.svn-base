@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="ui-mobile portrait min-width-320px min-width-480px max-width-768px max-width-1024px">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="${request.contextPath}/css/jquery.mobile-1.3.2.min.css">
+  <link rel="stylesheet" href="${request.contextPath}/css/comm.css?t=1392717679">
+  <link rel="stylesheet" href="${request.contextPath}/css/style.css" />
+  <script src="${request.contextPath}/js/jquery-1.9.1.min.js"></script>
+  <script src="${request.contextPath}/js/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${request.contextPath}/js/ajaxfileupload.js"></script>
+<title>转让</title>
+</head>
+<style>
+	
+	.ui-icon{
+			position:absolute;
+	}
+	span{
+		margin-left: 5%
+	}
+	a,a:link,a:active,a:visited,a:hover{
+		text-decoration:none;
+	}
+	
+</style>
+<body>
+<input type="hidden" id="dealType" name="dealType" value="1" />
+<div>
+ 	<div  class="nav">
+  	<img src="${request.contextPath}/images/back.gif" class="lnavimg" onclick="history.go(-1)" />
+	<span class="navtext">转让</span>
+   </div>
+	
+	<div>
+	<table class="mt10 ml10">
+			<tbody>
+				<tr>
+					<th>
+						<#if dealMessage.userImage??>
+							<img src="${dealMessage.userImage}" class="bimg">
+						<#else>
+							<img src="${request.contextPath}/images/touxiang.jpg" class="bimg">
+						</#if>
+					</th>
+					<td><span>${dealMessage.username}</span><br/>发布时间：${dealMessage.createTime?string("yyyy-MM-dd")}</td>
+					<#if dealMessage.dealStatus==2>
+						<td><img src="${request.contextPath}/images/wancheng.png" class="mimg"></td>
+					</#if>
+				</tr>
+			</tbody>
+		</table>
+	</div>	
+	<div data-role="fieldcontain">
+		<input type="hidden" id="dealId" name="dealId" value="${dealMessage.dealId}" />
+		<table style="width: 99%;">
+			<tbody>
+				<tr>
+					<td >
+						<span style="font-weight:bolder; ">${dealMessage.dealTitle}</span>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<span style="color: red;">￥${dealMessage.originalPrice}元</span>&nbsp;<span style="color: silver;text-decoration:line-through;">￥${dealMessage.costPrice}元</span>
+					</td>
+				</tr>
+				<tr>
+					<td ><hr></td>
+				</tr>
+				<tr>
+					<td>
+						<span class="silver">商品图片</span>
+					</td>
+				</tr>
+				<tr >
+					<td style="padding-left:5%;">
+					<img src="${request.contextPath}${dealMessage.dealImage}" width="50px;" height="50px;">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="silver" >简介</span>
+						
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<span>${dealMessage.dealDesc}</span>
+					</td>
+				</tr>
+				<tr>
+					<td ><hr></td>
+				</tr>
+				<#if Session.userVO.id != dealMessage.createUser>
+				<tr>
+					<td>
+						<div class="tuoyuan">
+					 	<a <#if dealMessage.dealStatus!=2>href="javascript:chujia()"<#else>href="#"</#if>" style="color:#AAA;maring-top:8px;">出价转让</a>
+					 	</div>
+					</td>
+				</tr>
+				<tr>
+					<td ><hr></td>
+				</tr>
+				</#if>
+				<tr>
+					<td>
+						<span class="silver" >备注</span>	
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<span>
+							<#if dealMessage.dealBarter==1>
+								<i class="ui-icon ui-icon-check"></i><span>&nbsp;&nbsp;支持物物交换</span>
+							<#else>
+								<i class="ui-icon ui-icon-delete"></i><span>&nbsp;&nbsp;不支持物物交换</span>	
+							</#if>
+						</span>
+					</td>
+				</tr>		
+			</tbody>
+		</table>
+	</div>
+
+<div>
+	<span class="silver">出价(${dealPays?size})</span><br><hr>
+	<#list dealPays as dealPays>
+	<table class="silvertab">
+		<tr>
+				<td>
+					<#if dealPays.dealImage??>
+						<img src="${dealPays.dealImage}"  class="mimg">
+					<#else>
+						<img src="${request.contextPath}/images/touxiang.jpg"  class="mimg">
+					</#if>
+				</td>
+				<td><span>${dealPays.dealName}&nbsp;出价:${dealPays.offerPrice}元</span></td>
+				<td><span>${dealPays.createTime?string('yyyy-MM-dd')}</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td style="width:65%"><span>${dealPays.offerDesc}</span></td>
+				<td></td>
+			</tr>
+			<#if dealPays.payImage??>
+			<tr>
+				<td></td>
+				<td style="width:65%"><span><img src="${request.contextPath}${dealPays.payImage}"  class="mimg"></span></td>
+				<td></td>
+			</tr>
+			</#if>
+			<#if dealPays.dealStatus==1>
+			<tr>
+				<td></td>
+				<td><span>商家回复:<br/></span><span>${dealPays.dealDesc}</span></td>
+				<td>${dealPays.dealTime?string('yyyy-MM-dd')}</td>
+			</tr>
+			</#if>
+			<#if Session.userVO.id == dealMessage.createUser && dealPays.dealStatus==1>
+			<tr>
+				<td></td>
+				<td cospan="2"><span><div style="border:1px solid #00f;height:30px;width:100px;line-height:30px" align="center">
+					<a href="tel:${dealPays.telphone}">${dealPays.telphone}</a>
+				</div></span></td>
+			</tr>
+			</#if>
+			<tr>
+			<#if Session.userVO.id == dealMessage.createUser && dealPays.dealStatus!=1>
+				<td colspan="3">
+					<div class="tuoyuan" align="center" style="cursor:pointer;" <#if dealMessage.dealStatus!=2>onclick="agree('${dealPays.payId}')"</#if>>同意</div>
+				</td>
+			</#if>
+			</tr>	
+		</table>
+		</#list>
+	</div>
+
+	<div class="mt20">
+	<span class="silver">回复(${replyMessages?size})</span><br><hr>
+	<#list replyMessages as reply>
+	<table class="silvertab">
+		<tr>
+			<td>
+				<#if reply.replyImage??>
+					<img src="${reply.replyImage}" class="mimg">
+				<#else>	
+					<img src="${request.contextPath}/images/touxiang.jpg" class="mimg">
+				</#if>
+			</td>
+			<td><span>${reply.replyName}</span></td>
+			<td><span>${reply.createTime?string('yyyy-MM-dd')}</span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="width:65%"><span>${reply.replyContent}</span></td>
+			<td align="center"><img src="${request.contextPath}/images/reply.gif"  style="width:15px; height:15px;" onclick="reply('${reply.replyName}')"></td>
+		</tr>	
+	</table>
+	</#list>
+	<div style="height:30px;width:100%"></div>
+</div>	
+	
+</div>
+
+	<div class="bottomBar">
+		<#if Session.userVO.id != dealMessage.createUser>
+		    <div class="bottomBarCon" onclick="reply()">
+				<span style="font-weight:lighter; color:silver;">输入回复</span>
+		    </div>
+	    <#else>
+	    	<div style="float:left; width:33%; color:#00f; cursor:pointer;" onclick="bianji('1')">编辑交易</div>
+	    	<#if dealMessage.dealStatus==1>
+	    		<div style="float:left; width:33%; color:#00f; cursor:pointer;" onclick="bianji('2')">完成交易</div>
+	    	<#else>
+	    		<div style="float:left; width:33%; color:#00f; cursor:pointer;" onclick="bianji('3')">打开交易</div>
+	    	</#if>
+	    	<div style="float:left; width:33%; color:#00f; cursor:pointer;" onclick="bianji('4')">取消交易</div>
+	    </#if>
+	</div>
+	
+	<div class="wrapper_top hide" id="reply">
+		<input type="hidden" id="replyName" name="replyName" value="" />
+		<div class="warn" style="top: 30%;width:85%;margin:10% 10% 0 3%;">
+            <div class="sendBorder">
+                <textarea id="context" name="context" onfocus="hideStyles()" onblur="showStyles();" cols="" rows="" class="sInput" placeholder="说两句吧.."></textarea>
+            </div>
+            <div class="sendOperate">
+                 <div class="operBtn db" style="float:right;width:65%;">
+                    <a href="#" onclick="window.location.reload();"  id="cBtn" class="cancelBtn db" title="">取消</a>
+                    <a href="#" onclick="indexReply()" class="sendBtn c1 db" title="" id="submitButton">发送</a>
+                </div>
+            </div>
+	    </div>
+	</div>
+	
+	<div class="wrapper_top hide" id="agree">
+		<input type="hidden" id="payId" name="payId" value="" />
+		<div class="warn" style="top: 30%;width:85%;margin:10% 10% 0 3%;">
+            <div class="sendBorder">
+                <textarea id="contextAgree" name="contextAgree" onfocus="hideStyles()" onblur="showStyles();" cols="" rows="" class="sInput" placeholder="说两句吧..."></textarea>
+            </div>
+            <div class="sendOperate">
+                 <div class="operBtn db" style="float:right;width:65%;">
+                    <a href="#" onclick="window.location.reload();" id="quxiao" class="cancelBtn db" title="">取消</a>
+                    <a href="#" onclick="indexAgree()" class="sendBtn c1 db" title="" id="submitButton">发送</a>
+                </div>
+            </div>
+	    </div>
+	</div>
+		
+<div class="wrapper_top" id="kuang" style="display:none;">
+		<div class="warn">
+			<div class="warntitle">出价转让</div>
+			<div class="warninfo">买家接受了您的出价就可以进行交易</div>
+			<div class="warnneirong">
+				<span style="color: red;">￥</span><input type="text" id="offerPrice" name="offerPrice" placeholder="出价（必填）" /><hr/>
+			</div>
+			<div class="warnneirong">
+				<input type="text" id="offerDesc" name="offerDesc" placeholder="留言（选填）" /><hr/>
+			</div>
+			<div class="warnneirong">
+				<input type="text" id="telphone" name="telphone" placeholder="电话（必填）" /><hr/>
+			</div>
+			<div data-role="fieldcontain" >
+		      	<img src="${request.contextPath}/images/tupian.png" class="tdcover" id="imgs" onclick="fileimage.click()" width="30px;" height="30px;">
+				<input type="file" name="fileimage" id="fileimage" style="display:none" onchange="upimage();">
+			</div>
+	        <button class="join" id="yes" onclick="yes()">确定</button>
+			<button class="quxiao" id="no" onclick="no()">取消</button>
+	    </div>
+	</div>
+
+<script type="text/javascript">
+function agree(payId){
+	$(document).scrollTop(0);
+	$('#payId').val(payId);
+	$("#agree").show();
+}
+
+function indexAgree(){
+	var payId='',dealDesc='',dealId='';
+	payId = $('#payId').val();
+	dealDesc = $('#contextAgree').val();
+	if(dealDesc==''){
+		alert("请输入内容!");
+		return false;
+	}
+	dealId = $('#dealId').val();
+	window.location.href ="../assignment/assignagree?payId="+payId+"&dealDesc="+dealDesc+"&dealId="+dealId;
+}
+
+function reply(replyName){
+	$(document).scrollTop(0);
+	$('#reply').show();
+	$('#replyName').val(replyName);
+}
+
+function indexReply(){
+	var replyName='',context='',dealId='';
+	replyName = $('#replyName').val();
+	context = $('#context').val();
+	if(context==''){
+		alert("请填写回复内容！");
+		return false;
+	}
+	if(replyName!=''){
+		context = "@"+replyName+" "+context;
+	}
+	dealId = $('#dealId').val();
+	window.location.href ="../assignment/assignreply?context="+context+"&dealId="+dealId;
+}
+
+function bianji(bianjiId){
+	var dealId = $('#dealId').val();
+	if(bianjiId=='1'){
+		location.href="${request.contextPath}/assignment/editAssign?assignId="+dealId;
+	}else{
+		window.location.href ="../deal/updateDealStatus?bianjiId="+bianjiId+"&dealId="+dealId+"&dealType="+dealType;
+	}
+}
+
+function chujia(){
+	$(document).scrollTop(0);
+	$("#kuang").show();
+}
+function no(){
+	window.location.reload();
+}
+function yes(){
+	var offerPrice='',offerDesc='',telphone='',payImage='';
+	offerPrice=$('#offerPrice').val();
+	offerDesc=$('#offerDesc').val();
+	telphone=$('#telphone').val();
+	payImage=$('#imgs').attr('src');
+	var dealId = $('#dealId').val();
+	var phoneTest = /^1[3,5,8]\d{9}$/;
+	if(offerPrice==''){
+		alert("请填写出价价格！");
+		return false;
+	}else if(isNaN(offerPrice)){
+		alert("出价价格必须为数字！");
+		return false;
+	}else if(telphone==''){
+		alert("电话不能为空！");
+		return false;
+	}else if(!phoneTest.test(telphone)){
+		alert("请填写正确的手机号！");
+		return false;
+	}
+	window.location.href ="../assignment/indexassignPay?offerPrice="+offerPrice+"&offerDesc="+offerDesc+"&telphone="+telphone+"&payImage="+payImage+"&dealId="+dealId;
+}
+//上传图片
+function upimage(){
+	var file = $("#fileimage").val();
+	$.ajaxFileUpload({  
+		url:'../assignment/upOneImg?&fileimage='+file,
+        secureuri : false,//一般设置为false    
+        fileElementId : 'fileimage',//文件上传空间的id属性  
+        dataType: 'text',
+        success :function(data) //服务器成功响应处理函数    
+        {	//alert("success"+data);
+        	$("#imgs").attr("src",data);
+        },  
+        error : function(data, status, e)//服务器响应失败处理函数    
+        {  
+        	alert("error"+data);
+        } 
+    });  
+}
+function checkLengthactName(bt){
+	 var maxChars = 100; 
+	  if (bt.value.length <= maxChars){
+	  		var curr = maxChars - bt.value.length;
+	    	document.getElementById("bt").innerHTML = curr ;   
+	    }else{
+	    	bt.value = bt.value.substring(0,maxChars); //删除超过部分
+	    }
+	    
+}
+</script>
+</body>
+</html>

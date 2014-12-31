@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.BazaarClassifyMapper">
+
+	<select id="getAllClassify" resultType="com.mochasoft.second.model.BazaarClassify">
+		SELECT  classify_id AS 'classifyId',
+				classify_name AS 'classifyName',
+				realtype AS 'realtype',
+				create_user AS 'createUser',
+				create_time AS 'createTime',
+				update_user AS 'updateUser',
+				update_time AS 'updateTime',
+				`status` AS 'status'
+		FROM bazaarclassify
+		<if test="status!='' and status!=null">
+			WHERE status = ${status}
+		</if>
+		ORDER BY CAST(classify_id as DECIMAL) 
+	</select>
+
+</mapper>

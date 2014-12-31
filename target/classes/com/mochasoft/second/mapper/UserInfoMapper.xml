@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.UserInfoMapper">
+
+	<select id="getUserInfoByUserNameAndStatus" resultType="com.mochasoft.second.model.UserInfo">
+		SELECT
+			user_id as userId,
+			user_name as userName,
+			nickname as nickname,
+			user_image as userImage,
+			user_sex as userSex,
+			telphone as telphone,
+			create_time as createTime,
+			status as status,
+			birthday as birthday,
+			marrystatus as marrystatus,
+			height as height,
+			education as education,
+			monthly as monthly,
+			province as province,
+			city as city,
+			marrytype as marrytype
+		FROM
+			user_info u
+		WHERE
+			u.user_name = #{userName}
+			AND u.marrytype = #{marrytype}
+	</select>
+
+	<insert id="saveUserInfo" parameterType="com.mochasoft.second.model.UserInfo">
+		INSERT INTO `user_info`
+			(
+			user_id,
+			user_name,
+			nickname,
+			user_image,
+			user_sex,
+			telphone,
+			create_time,
+			status,
+			birthday,
+			marrystatus,
+			height,
+			education,
+			monthly,
+			province,
+			city,
+			marrytype
+			)
+		VALUES
+			(
+				#{userId},
+				#{userName},
+				#{nickname},
+				#{userImage},
+				#{userSex},
+				#{telphone},
+				#{createTime},
+				#{status},
+				#{birthday},
+				#{marrystatus},
+				#{height},
+				#{education},
+				#{monthly},
+				#{province},
+				#{city},
+				#{marrytype}
+			)
+	</insert>
+
+	<update id="updateUserInfo" parameterType="com.mochasoft.second.model.UserInfo">
+		UPDATE `user_info`
+		<set>
+			<if test="nickname != null">nickname=#{nickname},</if>
+			<if test="userSex != null">user_sex=#{userSex},</if>
+			<if test="telphone != null">telphone=#{telphone},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
+			<if test="marrystatus != null">marrystatus=#{marrystatus},</if>
+			<if test="height != null">height=#{height},</if>
+			<if test="education != null">education=#{education},</if>
+			<if test="monthly != null">monthly=#{monthly},</if>
+			<if test="province != null">province=#{province},</if>
+			<if test="city != null">city=#{city},</if>
+			<if test="marrytype != null">marrytype=#{marrytype},</if>
+		</set>
+		WHERE user_name = #{userName}
+	</update>
+
+</mapper>

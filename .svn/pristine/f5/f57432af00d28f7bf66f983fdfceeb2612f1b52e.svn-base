@@ -1,0 +1,162 @@
+package com.mochasoft.second.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class DealMessage implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7950909713414469873L;
+	
+
+	private String dealId;// 交易id
+	private String dealTitle;// 交易名称
+	private String dealDesc;// 交易描述
+	private String dealImage;// 交易图片
+	private int dealType;// 交易类型（1.转让，2.求购）
+	private double originalPrice;// 现价
+	private double costPrice;// 原价 
+	private String classifyId;// 分类id
+	private int dealBarter;// 是否支持物物交换（0：不支持，1：支持）
+	private int dealStatus;// 交易状态（0.关闭，1.打开，2.完成）
+	private String createUser;// 交易创建人id
+	private Date createTime;// 交易创建时间
+	private Date updateTime;// 交易修改时间
+	private int status;// 交易编辑状态（0.草稿，1.发布）
+
+	private String username;//用户名
+	private String userImage;//用户头像
+	
+	public String getDealId() {
+		return dealId;
+	}
+
+	public void setDealId(String dealId) {
+		this.dealId = dealId;
+	}
+
+	public String getDealTitle() {
+		return dealTitle;
+	}
+
+	public void setDealTitle(String dealTitle) {
+		this.dealTitle = dealTitle;
+	}
+
+	public String getDealDesc() {
+		return dealDesc;
+	}
+
+	public void setDealDesc(String dealDesc) {
+		this.dealDesc = dealDesc;
+	}
+
+	public String getDealImage() {
+		return dealImage;
+	}
+
+	public void setDealImage(String dealImage) {
+		this.dealImage = dealImage;
+	}
+
+	public int getDealType() {
+		return dealType;
+	}
+
+	public void setDealType(int dealType) {
+		this.dealType = dealType;
+	}
+
+	
+	public double getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(double originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
+	public double getCostPrice() {
+		return costPrice;
+	}
+
+	public void setCostPrice(double costPrice) {
+		this.costPrice = costPrice;
+	}
+
+	public String getClassifyId() {
+		return classifyId;
+	}
+
+	public void setClassifyId(String classifyId) {
+		this.classifyId = classifyId;
+	}
+
+	public int getDealBarter() {
+		return dealBarter;
+	}
+
+	public void setDealBarter(int dealBarter) {
+		this.dealBarter = dealBarter;
+	}
+
+	public int getDealStatus() {
+		return dealStatus;
+	}
+
+	public void setDealStatus(int dealStatus) {
+		this.dealStatus = dealStatus;
+	}
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
+	
+}

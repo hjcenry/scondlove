@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html class="ui-mobile portrait min-width-320px min-width-480px max-width-768px max-width-1024px">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+ <link type="text/css" rel="stylesheet" href="${request.contextPath}/css/style.css" />
+ <script type="text/javascript" src="${request.contextPath}/js/jquery-1.9.1.min.js"></script>
+ <script type="text/javascript" src="${request.contextPath}/js/deal/pur.js"></script>
+ </head>
+ <BODY>
+ <input type="hidden" id="page" value="${page.currentPageIndex}"/>
+ <input type="hidden" id="nextpage" value="${page.currentPageIndex+1}"/>
+ <input type="hidden" id="rows" value="${page.countPerPage}"/>
+ <input type="hidden" id="totalpage" value="${page.pageCount}" />
+ <input type="hidden" id="totalItem" value="${page.totalItem}"/>
+ 
+  <input type="hidden" id="classify" value="${classify!''}" />
+ <input type="hidden" id="changes" value="${changes!''}"/>
+  <div  class="nav">
+  	<img src="${request.contextPath}/images/back.gif" class="lnavimg" onclick="history.go(-1)" />
+	<span class="navtext">摩卡情缘</span>
+	<img src="${request.contextPath}/images/add.gif" class="navimg" onclick="$('#myModal_1').show();" />
+	<img src="${request.contextPath}/images/serach.gif" class="navimg" onclick="getserach();" />
+	
+  </div>
+  <div height="25">
+	<button class="but unopt" onclick="getassign()">白马王子</button><button class="but opt">白雪公主</button>
+  </div>
+  <div class="lis" id="lis">
+	<#if dealMessageList??>
+  <#list dealMessageList as dealMess>
+	<div id="pur${dealMess.dealId}" onclick="getpurDetail('${dealMess.dealId}')">
+		<TABLE class="tab">
+		<TR>
+			<TD class="imgtd"><img src="${dealMess.userImage}" class="smartimg" /></TD>
+			<TD><span class="bluefont">${dealMess.username}</span></TD>
+			<TD align="right"><span class="grayfont" >${dealMess.createTime?string("MM-dd")}</span></TD>
+		</TR>
+		<TR>
+			<TD></TD>
+			<TD colspan="2" class="textcon">${dealMess.dealTitle}</TD>
+			
+		</TR>
+		
+		<TR>
+			<TD></TD>
+			<TD><span class="redfont">活动时间：点</span></TD>
+			<TD align="right">
+				
+			</TD>
+		</TR>
+		</TABLE>
+
+	</div>
+  </#list>
+  </#if>
+  
+  </div>
+  
+  <#if page.currentPageIndex!=page.pageCount&&page.totalItem!=0>
+	  <div id="bmore">
+		<span class="bmore" onclick="getnextpage()" class="mt10">加载更多+</span>
+	  </div>
+  </#if>
+  
+  <!-- 操作 start-->
+<div id="myModal_1" class="hide">
+    <div class="modal">
+	</div>
+	<div class="modal-content">
+		<img src="${request.contextPath}/images/assign.gif" class="modelbtn" onclick="makeassign()" />
+		<img src="${request.contextPath}/images/pur.gif" class="modelbtn" onclick="makepur();" />
+	</div>
+</div>
+<!-- 操作 end-->
+
+<!-- 搜索 start-->
+<div id="myModal_2" class="modal hide" >
+    
+</div>
+<!-- 搜索 end-->
+
+<script type="text/javascript" >
+	function getserach(){
+		location.href="${request.contextPath}/deal/classify?dealtype=2";
+	}
+	
+	function getassign(){
+		location.href="${request.contextPath}/deal/assignment";
+	}
+	
+	function makeassign(){
+		location.href="${request.contextPath}/assignment/makeassignment";
+	}
+	
+	function makepur(){
+		location.href="${request.contextPath}/purchase/makepurchase";
+	}
+	
+	function getpurDetail(dealId){
+		location.href="${request.contextPath}/deal/purDetail?dealId="+dealId;
+	}
+</script>
+ </BODY>
+</HTML>

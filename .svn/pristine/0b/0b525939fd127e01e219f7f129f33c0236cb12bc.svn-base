@@ -1,0 +1,16 @@
+package com.mochasoft.second.mapper;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.mochasoft.second.model.UserInfo;
+import com.mochasoft.util.mapper.MyBatisRepository;
+
+@MyBatisRepository
+public interface UserInfoMapper {
+
+	UserInfo getUserInfoByUserNameAndStatus(@Param("userName") String userName, @Param("status") Integer status);
+
+	void saveUserInfo(UserInfo userInfo);
+
+	void updateUserInfo(UserInfo userInfo);
+}

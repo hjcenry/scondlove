@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.DealPayMapper">
+	<select id="getAllDealPaysById" resultType="com.mochasoft.second.model.DealPay">
+		SELECT  a.pay_id AS 'payId',
+				a.deal_id AS 'dealId',
+				a.pay_image AS 'payImage',
+				a.offer_desc AS 'offerDesc',
+				a.telphone AS 'telphone',
+				a.deal_desc AS 'dealDesc',
+				a.create_user AS 'createUser',
+				a.create_time AS 'createTime',
+				a.deal_user AS 'dealUser',
+				a.deal_time AS 'dealTime',
+				a.deal_status AS 'dealStatus',
+				b.user_name AS 'dealName',
+				b.user_image AS 'dealImage'
+		FROM deal_pay a
+		JOIN user_info b ON a.create_user = b.user_id
+		WHERE a.deal_id = #{dealId}
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<update id="agreeDealPay" parameterType="com.mochasoft.second.model.DealPay">
+		update deal_pay set deal_desc = #{dealDesc}, deal_user=#{dealUser},deal_time=NOW(), deal_status=#{dealStatus} WHERE pay_id = #{payId}
+	</update>
+	
+	<insert id="insertDealPay" parameterType="com.mochasoft.second.model.DealPay">
+		INSERT INTO deal_pay 
+			(pay_id,deal_id,pay_image,offer_desc,telphone,create_user,create_time,deal_status)
+		VALUES
+			(#{payId},#{dealId},#{payImage},#{offerDesc},#{telphone},#{createUser},NOW(),#{dealStatus})
+	</insert>
+</mapper>

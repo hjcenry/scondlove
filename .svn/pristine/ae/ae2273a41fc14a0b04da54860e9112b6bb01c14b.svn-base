@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="ui-mobile portrait min-width-320px min-width-480px max-width-768px max-width-1024px">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="${request.contextPath}/css/jquery.mobile-1.3.2.min.css">
+  <link rel="stylesheet" href="${request.contextPath}/css/mobiscroll.custom-2.6.2.min.css">
+  <script src="${request.contextPath}/js/jquery-1.9.1.min.js"></script>
+  <script src="${request.contextPath}/js/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${request.contextPath}/js/ajaxfileupload.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${request.contextPath}/js/area.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${request.contextPath}/js/mobiscroll.custom-2.6.2.min.js"></script>
+<title>完善个人信息</title>
+<script type="text/javascript">
+    	var s=["s1","s2"]; 
+		var opt0 = ["省份","地级市"];
+		function setup() 
+		{ 
+			for(var i=0;i<s.length-1;i++) 
+			document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")"); 
+			change(0); 
+		}
+$(document).ready(function(){
+		setup();
+			var now = new Date();
+		    $('#birthday').mobiscroll().datetime({
+		        theme: 'jqm',
+		        lang: 'zh',
+		        display: 'modal',
+		        mode: 'scroller',
+		        dateFormat:'yy-mm-dd',
+		        height:35,
+		        timeFormat:'',
+		        onShow:hideStyles,
+		        onSelect:showStyles,
+		        onCancel:showStyles
+		    });
+	});
+
+		function hideStyles(){
+			$("#tool").hide();
+		}
+		
+		function showStyles(){
+			$("#tool").show();
+		}
+</script>
+</head>
+
+<body>
+<div data-role="">
+ <div data-role="" data-theme="">
+  <h3 style="color:#00A5DB;">填写的不是资料，是一辈子的幸福</h3>
+  </div>
+  <div data-role="content" style="margin-bottom: 36px;">
+    <form name="personForm" id="personForm" action="#" method="post" data-ajax="false">
+	<div data-role="fieldcontain">
+  	  用户名:
+  	  <input type="text" readonly="readonly" disabled="disabled" class="validate[required,length[0,20]" value="${userName}"  />
+  	  <input type="hidden" name="userName" id="userName" value="${userName}"  />
+	</div>
+	<div data-role="fieldcontain">
+  	  昵称:
+  	  <input type="text" name="nickname" id="nickname" class="validate[required,length[0,20]" value=""  />
+	</div>
+	<div data-role="fieldcontain" >
+    <label for="context">上传头像:</label>
+      	<img src="${request.contextPath}/images/tupian.png" class="tdcover" id="imgs" name="imgs" onclick="fileimage.click()" width="70px;" height="70px;">
+		<div style="display:none">
+		<input type="file" name="fileimage" id="fileimage" onchange="ajaxFileUpload();">
+		</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  <label >性别:</label>
+    	<div >
+	    	<select name="userSex" id="userSex" data-native-menu="false">
+				<option value="3">你懂的</option>
+				<option value="1">男士</option>
+				<option value="2">女士</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  我的生日:
+  	 <input type="text" id="birthday" name="birthday" style="width:100%;height:20px"/>
+	</div>
+	<div data-role="fieldcontain">
+  	  所在地区:
+			<div style="width: 45%;">
+				<select id="s1" name="province" style="width:100%;"></select> 
+			</div>
+			<div style="width: 45%; margin-left: 50%;margin-top: -39px;">
+				<select id="s2" name="city" style="width:100%;"></select>
+			 </div>
+	</div>
+	<div data-role="fieldcontain">
+  	  <label > 婚姻状态:</label>
+    	<div >
+	    	<select name="marrystatus" id="marrystatus" data-native-menu="false">
+				<option value="1">未婚</option>
+				<option value="2">离婚</option>
+				<option value="3">丧偶</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  <label > 我的身高(cm):</label>
+    	<div style="width: 60%;">
+	    	<select name="height" id="height" data-native-menu="false">
+				<option value="139">小于140</option>
+				<option value="140">140</option>
+				<option value="141">141</option>
+				<option value="142">142</option>
+				<option value="143">143</option>
+				<option value="144">144</option>
+				<option value="145">145</option>
+				<option value="146">146</option>
+				<option value="147">147</option>
+				<option value="148">148</option>
+				<option value="149">149</option>
+				<option value="150">150</option>
+				<option value="151">151</option>
+				<option value="152">152</option>
+				<option value="153">153</option>
+				<option value="154">154</option>
+				<option value="155">155</option>
+				<option value="156">156</option>
+				<option value="157">157</option>
+				<option value="158">158</option>
+				<option value="159">159</option>
+				<option value="160">160</option>
+				<option value="161">161</option>
+				<option value="162">162</option>
+				<option value="163">163</option>
+				<option value="164">164</option>
+				<option value="165">165</option>
+				<option value="166">166</option>
+				<option value="167">167</option>
+				<option value="168">168</option>
+				<option value="169">169</option>
+				<option value="170">170</option>
+				<option value="171">171</option>
+				<option value="172">172</option>
+				<option value="173">173</option>
+				<option value="174">174</option>
+				<option value="175">175</option>
+				<option value="176">176</option>
+				<option value="177">177</option>
+				<option value="178">178</option>
+				<option value="179">179</option>
+				<option value="180">180</option>
+				<option value="181">181</option>
+				<option value="182">182</option>
+				<option value="183">183</option>
+				<option value="184">184</option>
+				<option value="185">185</option>
+				<option value="186">186</option>
+				<option value="187">187</option>
+				<option value="188">188</option>
+				<option value="189">189</option>
+				<option value="190">190</option>
+				<option value="191">191</option>
+				<option value="192">192</option>
+				<option value="193">193</option>
+				<option value="194">194</option>
+				<option value="195">195</option>
+				<option value="196">196</option>
+				<option value="197">197</option>
+				<option value="198">198</option>
+				<option value="199">199</option>
+				<option value="200">200</option>
+				<option value="201">201</option>
+				<option value="202">202</option>
+				<option value="203">203</option>
+				<option value="204">204</option>
+				<option value="205">205</option>
+				<option value="206">206</option>
+				<option value="207">207</option>
+				<option value="208">208</option>
+				<option value="209">209</option>
+				<option value="210">210</option>
+				<option value="211">大于210</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  <label > 我的学历:</label>
+    	<div >
+	    	<select name="education" id="education" data-native-menu="false">
+				<option value="高中及以下">高中及以下</option>
+				<option value="中专">中专</option>
+				<option value="大专">大专</option>
+				<option value="大学本科">大学本科</option>
+				<option value="硕士">硕士</option>
+				<option value="博士">博士</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  <label > 我的月薪:</label>
+    	<div >
+	    	<select name="monthly" id="monthly" data-native-menu="false">
+				<option value="1000以下">1000以下</option>
+				<option value="1000-3000">1001-3000</option>
+				<option value="3001-5000">3001-5000</option>
+				<option value="5001-8000">5001-8000</option>
+				<option value="8001-10000">8001-10000</option>
+				<option value="10001-30000">10001-30000</option>
+				<option value="30001-50000">30001-50000</option>
+				<option value="50000以上">50000以上</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  电话:
+  	  <input type="text" name="telphone" id="telphone" class="validate[required,length[0,20]" value=""/>
+	</div>
+		 <button type="button" onclick="tijiao()" id="add" name="add">提交</button>
+   </form> 
+  </div>
+</div>
+<script type="text/javascript">
+function tijiao(){
+	var userName='',nickname='',userSex='',telphone='',dealImage='',birthday='',province='',city='',marrystatus='',height='',education='',monthly='';
+	
+	userName = $('#userName').val();
+	nickname = $('#nickname').val();
+	userSex = $('#userSex').val();
+	telphone = $('#telphone').val();
+	dealImage = $('#imgs').attr('src');
+	birthday=$('#birthday').val();
+	province=$('#s1').val();
+	city=$('#s2').val();
+	marrystatus=$('#marrystatus').val();
+	height=$('#height').val();
+	education=$('#education').val();
+	monthly=$('#monthly').val();
+	
+	if(userName==''){
+		$.DIC.dialog({content:'用户名非法操作！', autoClose:true});
+		return false;
+	}else if(userName.length>40){
+		$.DIC.dialog({content:'用户名不能超过40个字！', autoClose:true});
+		return false;
+	}
+	if(nickname==''){
+		$.DIC.dialog({content:'昵称不能为空！', autoClose:true});
+		return false;
+	}else if(nickname.length>40){
+		$.DIC.dialog({content:'昵称不能超过40个字！', autoClose:true});
+		return false;
+	}
+	if(!(userSex == '1' || userSex == '2' || userSex == '3')){
+		$.DIC.dialog({content:'性别非法操作！', autoClose:true});
+		return false;
+	}
+	if(telphone==''){
+		$.DIC.dialog({content:'电话不能为空！', autoClose:true});
+		return false;
+	}else if(telphone.length>20){
+		$.DIC.dialog({content:'电话不能超过20个字符！', autoClose:true});
+		return false;
+	}
+	
+	if(dealImage.substring(dealImage.lastIndexOf('/')+1)=='tupian.png'){
+		$.DIC.dialog({content:'请上传头像！', autoClose:true});
+		return false;
+	}
+	if(birthday==''){
+		$.DIC.dialog({content:'生日不能为空！', autoClose:true});
+		return false;
+	}
+	if(province==''){
+		$.DIC.dialog({content:'省份不能为空！', autoClose:true});
+		return false;
+	}else if(province=='省份'){
+		$.DIC.dialog({content:'不能选省份！', autoClose:true});
+		return false;
+	}
+	if(city==''){
+		$.DIC.dialog({content:'地级市不能为空！', autoClose:true});
+		return false;
+	}
+	if(!(marrystatus == '1' || marrystatus == '2' || marrystatus == '3')){
+		$.DIC.dialog({content:'婚姻非法操作！', autoClose:true});
+		return false;
+	}
+	
+	
+	$('#add').attr("disabled",true);
+	var datas={
+		'userName':userName,
+		'nickname':nickname,
+		'userSex':userSex,
+		'telphone':telphone,
+		'dealImage':dealImage,
+		'birthday':birthday,
+		'province':province,
+		'city':city,
+		'marrystatus':marrystatus,
+		'height':height,
+		'education':education,
+		'monthly':monthly
+	}
+	$.ajax({
+		type: 'POST',
+		url: '${request.contextPath}/auth/submitUserInfo',
+		data: datas,
+		success: function(data){
+			if(data.success){
+				window.location.href ="../deal/assignment";
+	    	}else{
+	    		$.DIC.dialog({content:'提交失败，请稍后重试！', autoClose:true});
+	    	}
+	    	$('#add').attr("disabled",false);
+	    }
+	});
+
+	
+}
+	function ajaxFileUpload(){
+		if(document.getElementById("fileimage").value){
+			jQuery.ajaxFileUpload({
+				url:'${request.contextPath}/auth/uploader?userName=${userName}',
+				secureuri:false,
+				fileElementId:'fileimage',
+				dataType: 'json',
+		        success: function (data, status){
+		        	if(data.success){
+						jQuery("#imgs").attr("src", '${request.contextPath}'+data.filePath);
+					}else{
+						alert(data.msg);
+					}
+		        },error: function (data, status, e){  
+					alert('添加失败');
+				}
+			});
+		} else {
+			alert("请选择要上传的图片！");
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.UserInfoMapper">
+
+	<select id="getUserInfoByUserNameAndStatus" resultType="com.mochasoft.second.model.UserInfo">
+		SELECT
+			*
+		FROM
+			user_info u
+		WHERE
+			u.user_name = #{userName}
+			AND u.`status` = #{status}
+	</select>
+
+	<insert id="saveUserInfo" parameterType="com.mochasoft.second.model.UserInfo">
+		INSERT INTO `user_info`
+			(
+				user_id,
+				user_name,
+				nickname,
+				user_image,
+				user_sex,
+				telphone,
+				create_time,
+				`status`
+			)
+		VALUES
+			(
+				#{userId},
+				#{userName},
+				#{nickname},
+				#{userImage},
+				#{userSex},
+				#{telphone},
+				#{createTime},
+				#{status}
+			)
+	</insert>
+
+	<update id="updateUserInfo" parameterType="com.mochasoft.second.model.UserInfo">
+		UPDATE `user_info`
+		<set>
+			<if test="nickname != null">nickname=#{nickname},</if>
+			<if test="userSex != null">user_sex=#{userSex},</if>
+			<if test="telphone != null">telphone=#{telphone},</if>
+			<if test="status != null">status=#{status},</if>
+		</set>
+		WHERE user_name = #{userName}
+	</update>
+
+</mapper>

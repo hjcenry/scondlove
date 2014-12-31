@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="ui-mobile portrait min-width-320px min-width-480px max-width-768px max-width-1024px">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="${request.contextPath}/css/jquery.mobile-1.3.2.min.css">
+  <link rel="stylesheet" href="${request.contextPath}/css/font-awesome.min.css">
+  <script src="${request.contextPath}/js/jquery-1.9.1.min.js"></script>
+  <script src="${request.contextPath}/js/global.js"></script>
+  <script src="${request.contextPath}/js/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${request.contextPath}/js/ajaxfileupload.js"></script>
+<title>完善个人信息</title>
+</head>
+<style>
+	.ui-icon{
+			position:absolute;
+	}
+	
+	.tips {
+		padding: 0 20px;
+		height: 35px;
+		background-color: #000;
+		margin: 0 auto;
+		filter: alpha(opacity=60);
+		opacity: 0.6;
+		line-height: 35px;
+		font-size: 1.2rem;
+		text-align: center;
+		color: #fff;
+		-moz-border-radius: 0.5rem;
+		-webkit-border-radius: 0.5rem;
+		border-radius: 0.5rem;
+	}
+
+</style>
+<body>
+<div data-role="page">
+ <div data-role="header" data-theme="c">
+  <h1>完善个人信息</h1>
+  </div>
+  <div data-role="content" style="margin-bottom: 36px;">
+    <form name="personForm" id="personForm" action="#" method="post" data-ajax="false">
+	<div data-role="fieldcontain">
+  	  用户名:
+  	  <input type="text" readonly="readonly" disabled="disabled" class="validate[required,length[0,20]" value="${userName}"  />
+  	  <input type="hidden" name="userName" id="userName" value="${userName}"  />
+	</div>
+	<div data-role="fieldcontain">
+  	  昵称:
+  	  <input type="text" name="nickname" id="nickname" class="validate[required,length[0,20]" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+  	  <label >性别:</label>
+    	<div >
+	    	<select name="userSex" id="userSex" data-native-menu="false">
+				<option value="3">保密</option>
+				<option value="1">男</option>
+				<option value="2">女</option>
+	      	</select>
+      	</div>
+	</div>
+	<div data-role="fieldcontain">
+  	  电话:
+  	  <input type="text" name="telphone" id="telphone" class="validate[required,length[0,20]" value=""  />
+	</div>
+	<div data-role="fieldcontain" >
+    <label for="context">上传头像:</label>
+      	<img src="${request.contextPath}/images/tupian.png" class="tdcover" id="imgs" name="imgs" onclick="fileimage.click()" width="70px;" height="70px;">
+		<input type="file" name="fileimage" id="fileimage" style="display:none" onchange="ajaxFileUpload();">
+	</div>
+	
+		 <button type="button" onclick="tijiao()" id="add" name="add">提交</button>
+   </form> 
+  </div>
+</div>
+<script type="text/javascript">
+
+function tijiao(){
+	var userName='',nickname='',userSex='',telphone='',dealImage='';
+	userName = $('#userName').val();
+	if(userName==''){
+		$.DIC.dialog({content:'用户名非法操作！', autoClose:true});
+		return false;
+	}else if(userName.length>40){
+		$.DIC.dialog({content:'用户名不能超过40个字！', autoClose:true});
+		return false;
+	}
+	nickname = $('#nickname').val();
+	if(nickname==''){
+		$.DIC.dialog({content:'昵称不能为空！', autoClose:true});
+		return false;
+	}else if(nickname.length>40){
+		$.DIC.dialog({content:'昵称不能超过40个字！', autoClose:true});
+		return false;
+	}
+	userSex = $('#userSex').val();
+	if(!(userSex == '1' || userSex == '2' || userSex == '3')){
+		$.DIC.dialog({content:'性别非法操作！', autoClose:true});
+		return false;
+	}
+	telphone = $('#telphone').val();
+	if(telphone==''){
+		$.DIC.dialog({content:'电话不能为空！', autoClose:true});
+		return false;
+	}else if(telphone.length>20){
+		$.DIC.dialog({content:'电话不能超过20个字符！', autoClose:true});
+		return false;
+	}
+	dealImage = $('#imgs').attr('src');
+	if(dealImage.substring(dealImage.lastIndexOf('/')+1)=='tupian.png'){
+		$.DIC.dialog({content:'请上传头像！', autoClose:true});
+		return false;
+	}
+	$('#add').attr("disabled",true);
+	var datas={
+		'userName':userName,
+		'nickname':nickname,
+		'userSex':userSex,
+		'telphone':telphone,
+		'dealImage':dealImage
+	}
+	$.ajax({
+		type: 'POST',
+		url: '${request.contextPath}/auth/submitUserInfo',
+		data: datas,
+		success: function(data){
+			if(data.success){
+				window.location.href ="../deal/assignment";
+	    	}else{
+	    		$.DIC.dialog({content:'提交失败，请稍后重试！', autoClose:true});
+	    	}
+	    	$('#add').attr("disabled",false);
+	    }
+	});
+
+	
+}
+	function ajaxFileUpload(){
+		if(document.getElementById("fileimage").value){
+			jQuery.ajaxFileUpload({
+				url:'${request.contextPath}/auth/uploader?userName=${userName}',
+				secureuri:false,
+				fileElementId:'fileimage',
+				dataType: 'json',
+		        success: function (data, status){
+		        	if(data.success){
+						jQuery("#imgs").attr("src", '${request.contextPath}'+data.filePath);
+					}else{
+						alert(data.msg);
+					}
+		        },error: function (data, status, e){  
+					alert('添加失败');
+				}
+			});
+		} else {
+			alert("请选择要上传的图片！");
+		}
+	}
+</script>
+</body>
+</html>

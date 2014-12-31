@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="ui-mobile portrait min-width-320px min-width-480px max-width-768px max-width-1024px">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="${request.contextPath}/css/style.css" />
+	<link rel="stylesheet" href="${request.contextPath}/css/comm.css?t=1392717679">
+	<title>个人信息</title>
+	<style type="text/css">
+		.ui-icon{
+				position:absolute;
+		}
+		span{
+			margin-left: 5%
+		}
+		a,a:link,a:active,a:visited,a:hover{
+			text-decoration:none;
+		}
+	</style>
+	<script type="text/javascript">
+		function getassign(){
+			location.href="${request.contextPath}/deal/assignment";
+		}
+	</script>
+</head>
+<body>
+	<div>
+ 		<div  class="nav">
+  			<img src="${request.contextPath}/images/back.gif" class="lnavimg" onclick="getassign()" />
+			<span class="navtext">${userMessage.nickname}</span>
+   		</div>
+   		<table class="mt10 ml10" style="width:95%;">
+			<tbody>
+				<tr>
+					<td>
+						<#if userMessage.userImage??>
+							<img src="${userMessage.userImage}" class="bimg">
+						<#else>
+							<img src="${request.contextPath}/images/touxiang.jpg" class="bimg">
+						</#if>
+					</td>
+					<td>
+						<span>${userMessage.nickname}（<#if userMessage.userSex==1>男<#elseif userMessage.userSex==2>女<#else>保密</#if>）</span><br/>
+						<br/>&nbsp;创建时间：${userMessage.createTime?string("yyyy-MM-dd")}
+					</td>
+					<#if userMessage.telphone?? && userMessage.telphone!=''>
+					<td>
+						联系方式：<br/>
+						<a href="tel:${userMessage.telphone}" style="display: block;width:100%;height:25px;line-height:25px;border-radius: 5px;border: 1px solid #FF6277;" align="center">${userMessage.telphone}</a>
+					</td>
+					</#if>
+				</tr>
+			</tbody>
+		</table>	
+	<div>
+	<br/>
+	<div>
+		<span class="silver">个人信息</span><br>
+		<table class="silvertab"></table>
+		<table style="width: 96%;margin: 10px 2% 0px;">
+			<tr style="height:30px;">
+				<td>身高：${userMessage.height!''}</td>
+				<td>生日：<#if userMessage.birthday??>${userMessage.birthday?string('yyyy-MM-dd')}<#else>保密</#if></td>
+			</tr>
+			<tr style="height:30px;">
+				<td>月薪：<#if userMessage.monthly??>${userMessage.monthly}<#else>保密</#if></td>
+				<td>学历：<#if userMessage.education??>${userMessage.education}<#else>保密</#if></td>
+			</tr>
+			<tr style="height:30px;">
+				<td>婚姻状况：
+					<#if userMessage.marrystatus==0>未婚
+					<#elseif userMessage.marrystatus==1>离婚
+					<#elseif userMessage.marrystatus==2>丧偶
+					<#else>保密
+					</#if>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>地址：</td>
+			</tr>
+			<tr style="height:30px;">
+				<td>省份：<#if userMessage.province??>${userMessage.province}<#else>保密</#if></td>
+				<td>城市：<#if userMessage.city??>${userMessage.city}<#else>保密</#if></td>
+			</tr>
+		</table>
+	</div>
+</body>

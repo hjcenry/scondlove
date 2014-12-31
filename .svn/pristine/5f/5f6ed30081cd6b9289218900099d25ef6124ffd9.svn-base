@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.DealMessageMapper">
+
+	<select id="geDealMessage"  resultType="com.mochasoft.second.model.DealMessage">
+		select 
+			a.deal_id as dealId,
+			a.deal_title as dealTitle,
+			a.deal_desc as dealDesc,
+			a.deal_image as dealImage,
+			a.deal_hope as dealHope,
+			a.create_time as createTime,
+			b.user_name as username,
+			b.user_image as userImage
+			
+		from deal_message a,user_info b
+		where 
+			a.create_user=b.user_id
+		 	and a.deal_status!=0  
+		 	and  a.status=1 
+		 	and b.user_sex=#{dealtype}
+		 	<if test="classify!=null" >
+		 		and a.classify_id=#{classify}
+		 	</if>
+		 	
+		 	
+		order by a.create_time desc
+		limit #{page},#{rows}
+	</select>
+	
+	<select id="geDealMessageCount"  parameterType="String" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from deal_message a,user_info b
+		where 
+			a.create_user=b.user_id
+		 	and a.deal_status!=0  
+		 	and a.status=1 
+		 	and b.user_sex=#{dealtype}
+			<if test="classify!=null" >
+		 		and a.classify_id=#{classify}
+		 	</if>
+	</select>
+	
+	<insert id="insertDealMessage" parameterType="com.mochasoft.second.model.DealMessage">
+		INSERT INTO deal_message
+			(deal_id,deal_title,deal_desc,deal_image,deal_hope,deal_type,classify_id,deal_status,create_user,create_time,update_time,status)
+		VALUES
+			(#{dealId},#{dealTitle},#{dealDesc},#{dealImage},#{dealHope},#{dealType},#{classifyId},#{dealStatus},#{createUser},NOW(),NOW(),#{status})
+	</insert>
+	
+	<update id="updateDealMessage" parameterType="com.mochasoft.second.model.DealMessage">
+		update deal_message set
+			deal_title=#{dealTitle},
+			deal_desc=#{dealDesc},
+			<if test="dealImage!=null">
+				deal_image=#{dealImage},
+			</if>
+			deal_hope=#{dealHope},
+			classify_id=#{classifyId},
+			
+		where deal_id=#{dealId}
+	</update>
+	
+	<select id="getDealMessageOne" resultType="com.mochasoft.second.model.DealMessage">
+		SELECT  a.deal_id AS 'dealId',
+				a.deal_title AS 'dealTitle',
+				a.deal_desc AS 'dealDesc',
+				a.deal_image AS 'dealImage',
+				a.deal_type AS 'dealType',
+				a.deal_hope as dealHope,
+				a.classify_id AS 'classifyId',
+				a.deal_status AS 'dealStatus',
+				a.create_user AS 'createUser',
+				a.create_time AS 'createTime',
+				b.user_name AS 'username',
+				b.user_image AS 'userImage',
+				a.update_time AS 'updateTime',
+				a.`status` AS 'status'
+		FROM deal_message a
+		JOIN user_info b ON a.create_user = b.user_id
+		WHERE a.deal_id = #{dealId}
+	</select>
+	
+	<update id="updateDealStatus" parameterType="com.mochasoft.second.model.DealMessage">
+		update deal_message set deal_status = #{dealStatus} WHERE deal_id = #{dealId}
+	</update>
+</mapper>

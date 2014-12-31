@@ -1,0 +1,19 @@
+#jdbc.url=jdbc:mysql://sqld.duapp.com:4050/tifgPdpZmEXOtDkkxVbN?useUnicode=true&characterEncoding=utf-8
+#jdbc.user=CALwiM8NRSCCX5kM2VTh8HCz
+#jdbc.password=rqxiStezDfIesvpPPxsYPZfi3iI9nraX
+
+jdbc.url=jdbc:mysql://192.168.6.119:3306/predestinedlove?useUnicode=true&characterEncoding=utf-8
+jdbc.user=second
+jdbc.password=second
+#jdbc.url=jdbc:mysql://192.168.6.66:3306/minsheng?useUnicode=true&characterEncoding=utf-8
+#jdbc.user=minsheng
+#jdbc.password=minsheng
+#jdbc.password=W1Aos7yI87i2fNoXisjti78Wsjt9rcM8mmQDu781MbLlJATrXm278G6JgMu60HsPR009xxu5H7obGaNqiJ7RqA==
+
+jdbc.initialSize=1
+jdbc.maxActive=10
+
+#jdbc.driverClassName=com.mysql.jdbc.Driver
+#jdbc.url=jdbc:mysql://sqld.duapp.com:4050/tifgPdpZmEXOtDkkxVbN?user=CALwiM8NRSCCX5kM2VTh8HCz&password=rqxiStezDfIesvpPPxsYPZfi3iI9nraX&useUnicode=true&characterEncoding=UTF-8
+#jdbc.url=jdbc:mysql://192.168.6.64:3306/salesmanager?user=salesmanager&password=salesmanager&useUnicode=true&characterEncoding=UTF-8
+#java -cp druid-1.0.0.jar com.alibaba.druid.filter.config.ConfigTools sales%manager

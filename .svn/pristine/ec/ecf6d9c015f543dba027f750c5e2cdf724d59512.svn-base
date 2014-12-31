@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mochasoft.second.mapper.ReplyMessageMapper">
+	<select id="getAllReplyMessagesByDealId" resultType="com.mochasoft.second.model.ReplyMessage">
+		SELECT  a.reply_id AS 'replyId',
+				a.reply_content AS 'replyContent',
+				a.deal_id AS 'dealId',
+				a.create_user AS 'createUser',
+				a.create_time AS 'createTime',
+				a.`status` AS 'status',
+				b.user_name AS 'replyName',
+				b.user_image AS 'replyImage'
+		FROM reply_message a
+		JOIN user_info b ON a.create_user = b.user_id
+		WHERE a.deal_id = #{dealId}
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<insert id="indexReply" parameterType="com.mochasoft.second.model.ReplyMessage">
+		INSERT INTO reply_message 
+			(reply_id,reply_content,deal_id,create_user,create_time,`status`)
+		VALUES
+			(#{replyId},#{replyContent},#{dealId},#{createUser},NOW(),#{status})
+	</insert>
+</mapper>
